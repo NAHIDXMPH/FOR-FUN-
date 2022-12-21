@@ -1,0 +1,61 @@
+This game has three rooms: outside, inside, and garden. 
+The player starts in the outside room and can move between the rooms using the move function.
+The player can also type "look" to see the description of the current room and the available exits.
+The game runs in a loop and ends when the player types "quit".
+
+
+
+# Initialize variables
+current_room = "outside"
+inventory = []
+
+# Define the different rooms
+rooms = {
+    "outside": {
+        "description": "You are outside a small house. There is a door to the east and a path to the south.",
+        "exits": {"east": "inside", "south": "garden"}
+    },
+    "inside": {
+        "description": "You are inside the house. There is a table with a vase on it and a door to the west.",
+        "exits": {"west": "outside"}
+    },
+    "garden": {
+        "description": "You are in a beautiful garden. There is a path to the north.",
+        "exits": {"north": "outside"}
+    }
+}
+
+# Define the function to look around the current room
+def look_around():
+    print(rooms[current_room]["description"])
+    print("Exits:", end=" ")
+    for exit in rooms[current_room]["exits"]:
+        print(exit, end=" ")
+    print()
+
+# Define the function to move to a different room
+def move(direction):
+    global current_room
+    if direction in rooms[current_room]["exits"]:
+        current_room = rooms[current_room]["exits"][direction]
+        look_around()
+    else:
+        print("You can't go that way.")
+
+# Start the game
+look_around()
+
+# Main game loop
+while True:
+    # Get the player's command
+    command = input("> ")
+    
+    # Check if the player wants to move
+    if command in ["north", "south", "east", "west"]:
+        move(command)
+    elif command == "look":
+        look_around()
+    elif command == "quit":
+        break
+    else:
+        print("I don't understand what you mean.")
